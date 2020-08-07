@@ -1,6 +1,6 @@
 # Pulumi Htpasswd
 
-A pulumi ComponentResource for generating Htpasswd files.
+A pulumi resource for generating Htpasswd files.
 
 ## Installation
 

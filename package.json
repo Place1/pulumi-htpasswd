@@ -1,7 +1,7 @@
 {
   "name": "pulumi-htpasswd",
   "version": "1.0.0",
-  "description": "A pulumi ComponentResource for generating Htpasswd files",
+  "description": "A pulumi resource for generating htpasswd files",
   "license": "MIT",
   "author": "James Batt",
   "main": "dist/index.js",
