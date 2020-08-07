@@ -1,0 +1,27 @@
+{
+  "name": "pulumi-htpasswd",
+  "version": "1.0.0",
+  "description": "A pulumi ComponentResource for generating Htpasswd files",
+  "license": "MIT",
+  "author": "James Batt",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "github.com/place1/pulumi-htpasswd"
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -r ./dist || true",
+    "prepublish": "npm run clean && npm run build"
+  },
+  "devDependencies": {
+    "@pulumi/pulumi": "*",
+    "@types/bcryptjs": "^2.4.2",
+    "@types/lodash": "^4.14.159"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "lodash": "^4.17.19"
+  }
+}
