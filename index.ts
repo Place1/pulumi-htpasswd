@@ -95,6 +95,9 @@ export class Htpasswd extends pulumi.dynamic.Resource {
 }
 
 function randomString() {
+  // we have to do an inline require here because a top
+  // level causes pulumi to crash
+  // https://github.com/pulumi/pulumi/issues/5130
   return require('crypto').randomBytes(32).toString('base64')
     .replace(/\+/g, '-')
     .replace(/\//g, '_')
@@ -106,7 +109,8 @@ async function createHash(entry: pulumi.Unwrap<HtpasswdEntry>, algorithm: Htpass
   switch (algorithm) {
     case HtpasswdAlgorithm.Bcrypt:
       // we have to do an inline require here because a top
-      // level causes pulumi to crash with (TODO: insert issue)
+      // level causes pulumi to crash
+      // https://github.com/pulumi/pulumi/issues/5130
       hash = await require('bcryptjs').hash(entry.password!, 10);
       break;
     default:
