@@ -1,7 +1,6 @@
-import * as crypto from 'crypto';
-import { isEqual } from 'lodash';
 import * as pulumi from '@pulumi/pulumi';
 import { CreateResult, DiffResult, UpdateResult } from '@pulumi/pulumi/dynamic';
+import { isEqual } from 'lodash';
 
 export enum HtpasswdAlgorithm {
   /**
@@ -18,7 +17,8 @@ export interface HtpasswdEntry {
   /**
    * The password for the generated htpasswd
    *
-   * defaults to a cryptographically random alpha-numeric string
+   * defaults to a cryptographically random string
+   * containing the following character set: [a-zA-Z-_]
    */
   password?: pulumi.Input<string>;
 }
@@ -95,7 +95,7 @@ export class Htpasswd extends pulumi.dynamic.Resource {
 }
 
 function randomString() {
-  return crypto.randomBytes(64).toString('base64')
+  return require('crypto').randomBytes(32).toString('base64')
     .replace(/\+/g, '-')
     .replace(/\//g, '_')
     .replace(/\=/g, '');
