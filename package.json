@@ -1,6 +1,6 @@
 {
   "name": "pulumi-htpasswd",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "A pulumi resource for generating htpasswd files",
   "license": "MIT",
   "author": "James Batt",

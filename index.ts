@@ -6,7 +6,7 @@ export enum HtpasswdAlgorithm {
   /**
    * Use bcrypt encryption for passwords. This is currently considered to be very secure.
    */
-  Bcrypt,
+  Bcrypt = 'Bcrypt',
 }
 
 export interface HtpasswdEntry {
@@ -38,8 +38,10 @@ export interface HtpasswdInputs {
 }
 
 class HtpasswdProvider implements pulumi.dynamic.ResourceProvider {
+  private static defaultAlgorithm = HtpasswdAlgorithm.Bcrypt;
+
   async create(inputs: pulumi.Unwrap<HtpasswdInputs>): Promise<CreateResult> {
-    const algorithm = inputs.algorithm ?? HtpasswdAlgorithm.Bcrypt;
+    const algorithm = inputs.algorithm ?? HtpasswdProvider.defaultAlgorithm;
 
     const entries = inputs.entries.map((entry) => ({
       username: entry.username,
@@ -61,7 +63,7 @@ class HtpasswdProvider implements pulumi.dynamic.ResourceProvider {
         plaintextEntries: entries,
 
         // output used for future diffs
-        algorithm: algorithm,
+        algorithm: inputs.algorithm ?? HtpasswdProvider.defaultAlgorithm,
         entries: inputs.entries,
       },
     };
@@ -69,7 +71,7 @@ class HtpasswdProvider implements pulumi.dynamic.ResourceProvider {
 
   async diff(id: string, olds: pulumi.Unwrap<HtpasswdInputs>, news: pulumi.Unwrap<HtpasswdInputs>): Promise<DiffResult> {
     return {
-      changes: !isEqual(olds.algorithm, news.algorithm)
+      changes: !isEqual(olds.algorithm, news.algorithm ?? HtpasswdProvider.defaultAlgorithm)
         || !isEqual(olds.entries, news.entries),
     };
   }
